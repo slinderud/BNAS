@@ -1,0 +1,112 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.provider "vmware_workstation" do |vmw| 
+    vmw.gui=false
+ end
+
+ config.vm.define "nms" do |device|
+  device.vm.box = "phusion/ubuntu-14.04-amd64"
+  device.vm.synced_folder"../", "/vagrant", disabled: false
+ end
+
+
+
+ config.vm.define "R1" do |device|
+   device.ssh.insert_key = false
+   device.vm.box = "IOSv-L3"
+   device.vm.boot_timeout = 40
+   device.vm.synced_folder ".", "/vagrant", disabled: true
+   device.vm.provider "vmware_workstation" do |vmw|
+     vmw.vmx["ethernet1.present"] = "TRUE"
+     vmw.vmx["ethernet1.pvnID"] = "52 1e bf b9 5e 91 7d 7f-6c a5 97 6f eb 89 60 eb"
+     vmw.vmx["ethernet1.connectionType"] = "pvn"
+     vmw.vmx["ethernet1.virtualDev"] = "e1000"
+     vmw.vmx["ethernet1.wakeOnPcktRcv"] = "FALSE"
+     vmw.vmx["ethernet1.addressType"] = "generated"
+     vmw.vmx["ethernet1.pciSlotNumber"] = "40"
+     vmw.vmx["ethernet2.present"] = "TRUE"
+     vmw.vmx["ethernet2.pvnID"] = "52 7b cc 3d c0 56 e0 db-ec db e1 b7 f9 b2 9f a5"
+     vmw.vmx["ethernet2.connectionType"] = "pvn"
+     vmw.vmx["ethernet2.virtualDev"] = "e1000"
+     vmw.vmx["ethernet2.wakeOnPcktRcv"] = "FALSE"
+     vmw.vmx["ethernet2.addressType"] = "generated"
+     vmw.vmx["ethernet2.pciSlotNumber"] = "40"
+  end
+ end
+
+ config.vm.define "R2" do |device|
+   device.ssh.insert_key = false
+   device.vm.box = "IOSv-L3"
+   device.vm.boot_timeout = 40
+   device.vm.synced_folder ".", "/vagrant", disabled: true
+   device.vm.provider "vmware_workstation" do |vmw|
+     vmw.vmx["ethernet1.present"] = "TRUE"
+     vmw.vmx["ethernet1.pvnID"] = "52 1e bf b9 5e 91 7d 7f-6c a5 97 6f eb 89 60 eb"
+     vmw.vmx["ethernet1.connectionType"] = "pvn"
+     vmw.vmx["ethernet1.virtualDev"] = "e1000"
+     vmw.vmx["ethernet1.wakeOnPcktRcv"] = "FALSE"
+     vmw.vmx["ethernet1.addressType"] = "generated"
+     vmw.vmx["ethernet1.pciSlotNumber"] = "42"
+     vmw.vmx["ethernet2.present"] = "TRUE"
+     vmw.vmx["ethernet2.pvnID"] = "52 2c f4 a0 e3 b0 a7 12-02 54 b9 7e 2f b4 01 d3"
+     vmw.vmx["ethernet2.connectionType"] = "pvn"
+     vmw.vmx["ethernet2.virtualDev"] = "e1000"
+     vmw.vmx["ethernet2.wakeOnPcktRcv"] = "FALSE"
+     vmw.vmx["ethernet2.addressType"] = "generated"
+     vmw.vmx["ethernet2.pciSlotNumber"] = "42"
+  end
+ end
+
+ config.vm.define "SW1" do |device|
+   device.ssh.insert_key = false
+   device.vm.box = "IOSv-L2"
+   device.vm.boot_timeout = 40
+   device.vm.synced_folder ".", "/vagrant", disabled: true
+   device.vm.provider "vmware_workstation" do |vmw|
+     vmw.vmx["ethernet1.present"] = "TRUE"
+     vmw.vmx["ethernet1.pvnID"] = "52 7b cc 3d c0 56 e0 db-ec db e1 b7 f9 b2 9f a5"
+     vmw.vmx["ethernet1.connectionType"] = "pvn"
+     vmw.vmx["ethernet1.virtualDev"] = "e1000"
+     vmw.vmx["ethernet1.wakeOnPcktRcv"] = "FALSE"
+     vmw.vmx["ethernet1.addressType"] = "generated"
+     vmw.vmx["ethernet1.pciSlotNumber"] = "41"
+     vmw.vmx["ethernet2.present"] = "TRUE"
+     vmw.vmx["ethernet2.pvnID"] = "52 87 0e 37 ce 3a c6 3d-8c 9d 7e df 2a 63 24 fc"
+     vmw.vmx["ethernet2.connectionType"] = "pvn"
+     vmw.vmx["ethernet2.virtualDev"] = "e1000"
+     vmw.vmx["ethernet2.wakeOnPcktRcv"] = "FALSE"
+     vmw.vmx["ethernet2.addressType"] = "generated"
+     vmw.vmx["ethernet2.pciSlotNumber"] = "41"
+  end
+ end
+
+ config.vm.define "SW2" do |device|
+   device.ssh.insert_key = false
+   device.vm.box = "IOSv-L2"
+   device.vm.boot_timeout = 40
+   device.vm.synced_folder ".", "/vagrant", disabled: true
+   device.vm.provider "vmware_workstation" do |vmw|
+     vmw.vmx["ethernet1.present"] = "TRUE"
+     vmw.vmx["ethernet1.pvnID"] = "52 2c f4 a0 e3 b0 a7 12-02 54 b9 7e 2f b4 01 d3"
+     vmw.vmx["ethernet1.connectionType"] = "pvn"
+     vmw.vmx["ethernet1.virtualDev"] = "e1000"
+     vmw.vmx["ethernet1.wakeOnPcktRcv"] = "FALSE"
+     vmw.vmx["ethernet1.addressType"] = "generated"
+     vmw.vmx["ethernet1.pciSlotNumber"] = "43"
+     vmw.vmx["ethernet2.present"] = "TRUE"
+     vmw.vmx["ethernet2.pvnID"] = "52 55 78 5a 8b 3e d5 0c-e9 74 09 f1 0a c3 0f 76"
+     vmw.vmx["ethernet2.connectionType"] = "pvn"
+     vmw.vmx["ethernet2.virtualDev"] = "e1000"
+     vmw.vmx["ethernet2.wakeOnPcktRcv"] = "FALSE"
+     vmw.vmx["ethernet2.addressType"] = "generated"
+     vmw.vmx["ethernet2.pciSlotNumber"] = "43"
+  end
+ end
+
+end
+
+
+
+

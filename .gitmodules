@@ -1,0 +1,6 @@
+[submodule "vmware-iosv-vagrantfile"]
+	path = vmware-iosv-vagrantfile
+	url = https://github.com/haderp/vmware-iosv-vagrantfile.git
+[submodule "NetOpsWorkshop"]
+	path = NetOpsWorkshop
+	url = https://github.com/ipspace/NetOpsWorkshop.git
