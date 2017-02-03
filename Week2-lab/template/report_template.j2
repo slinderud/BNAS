@@ -1,0 +1,18 @@
+### Week2 Report
+
+
+{% for inventory_hostname in hostvars %}
+### {{ ansible_sysname }}
+Group:		
+{% for value in group_names %}
+- {{ value }}
+{% endfor %}
+Serialnumber:	{{ ansible_net_serialnum }}
+SW Version:	{{ ansible_net_version }}
+
+Interfaces:
+{% for n,v in ansible_net_interfaces.iteritems() %}
+{{ v.ipv4.address }}
+{% endfor %}
+
+{% endfor %}

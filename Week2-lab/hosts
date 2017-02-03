@@ -1,0 +1,9 @@
+[routers]
+R1.example.com
+R2.example.com
+
+[switches]
+#SW1.example.com
+#SW2.example.com
+
+
