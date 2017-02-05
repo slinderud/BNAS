@@ -1,18 +1,45 @@
-### Week2 Report
+Week2 Report
+=====
 
-
-{% for inventory_hostname in hostvars %}
-### {{ ansible_sysname }}
-Group:		
-{% for value in group_names %}
+{% for host in groups['all'] %}
+### {{ hostvars[host].ansible_sysname }}
+**Group**		
+{% for value in hostvars[host].group_names %}
 - {{ value }}
 {% endfor %}
-Serialnumber:	{{ ansible_net_serialnum }}
-SW Version:	{{ ansible_net_version }}
 
-Interfaces:
-{% for n,v in ansible_net_interfaces.iteritems() %}
-{{ v.ipv4.address }}
+**Serialnumber**
+{{ hostvars[host].ansible_net_serialnum }}
+**SW Version**
+{{ hostvars[host].ansible_net_version }}
+**SW Type**
+{{ hostvars[host].ansible_net_model }}
+
+{# #### Interfaces #### #}
+##Interfaces:
+{% for name,value in hostvars[host].ansible_net_interfaces|dictsort %}
+{% if value.ipv4.address is defined %}
+**{{ name }}**
+Desciption: {{ value.description }}
+IPv4 address: {{ value.ipv4.address }}/{{value.ipv4.masklen}}
+
+{% endif%}
+{% endfor %}
+{# ############### #}
+{# ##### Neighbors ###### #}
+
+{% if hostvars[host].ansible_net_neighbors is defined %}
+##neighbors:
+{% for intf,value in hostvars[host].ansible_net_neighbors.iteritems() %}
+{%   for host in value %}
+**{{ host.host }}**
+Local Port: 	{{ intf }}
+Remote Port:	{{ host.port }}
+
+{%   endfor %}
+{% endfor %}
+{% endif %}
+
+{# ############# #}
 {% endfor %}
 
-{% endfor %}

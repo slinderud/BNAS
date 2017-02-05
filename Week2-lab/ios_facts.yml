@@ -2,10 +2,10 @@
 - name: Collectio IOS Facts
   hosts: all
   vars:
-  - results: results
+   - report: report
   
   tasks:
-  - file: path={{results}} state=directory
+  - file: path={{report}} state=directory
     run_once: true
   - ios_facts: provider={{ios_provider}}
   - snmp_facts:
@@ -16,9 +16,9 @@
 
   - template:
       src: template/report_template.j2
-      dest: report/report.txt
+      dest: "{{report}}/report.md"
     vars:
       allhosts: "{{hostvars}}"
+    run_once: true
 
 
-  - copy: content="{{hostvars[inventory_hostname]|to_nice_yaml(indent=4)}}" dest={{results}}/{{inventory_hostname}}.json
