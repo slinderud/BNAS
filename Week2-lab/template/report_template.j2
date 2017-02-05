@@ -10,8 +10,10 @@ Week2 Report
 
 **Serialnumber**
 {{ hostvars[host].ansible_net_serialnum }}
+
 **SW Version**
 {{ hostvars[host].ansible_net_version }}
+
 **SW Type**
 {{ hostvars[host].ansible_net_model }}
 
@@ -20,7 +22,9 @@ Week2 Report
 {% for name,value in hostvars[host].ansible_net_interfaces|dictsort %}
 {% if value.ipv4.address is defined %}
 **{{ name }}**
+
 Desciption: {{ value.description }}
+
 IPv4 address: {{ value.ipv4.address }}/{{value.ipv4.masklen}}
 
 {% endif%}
@@ -33,7 +37,9 @@ IPv4 address: {{ value.ipv4.address }}/{{value.ipv4.masklen}}
 {% for intf,value in hostvars[host].ansible_net_neighbors.iteritems() %}
 {%   for host in value %}
 **{{ host.host }}**
+
 Local Port: 	{{ intf }}
+
 Remote Port:	{{ host.port }}
 
 {%   endfor %}
